@@ -35,4 +35,4 @@ COPY conf/main.conf /etc/nginx/modsec/
 
 COPY conf/default /etc/nginx/sites-available/
 
-# CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
