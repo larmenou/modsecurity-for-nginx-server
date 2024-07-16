@@ -6,6 +6,10 @@ RUN apt update -y && apt upgrade -y \
 	flex gawk git iputils-ping libcurl4-gnutls-dev libexpat1-dev libgeoip-dev liblmdb-dev \
 	libpcre3-dev libssl-dev libtool libxml2 libxml2-dev libyajl-dev locales liblua5.3-dev \
 	pkg-config wget zlib1g-dev libgd-dev \
+	&& mkdir /etc/nginx/ssl \
+	&& apt install openssl -y \
+    && openssl req -x509 -nodes -out /etc/nginx/ssl/transcendance.crt \
+    -keyout /etc/nginx/ssl/transcendance.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=transcendance.42.fr/UID=transcendance" \
 	&& cd /opt && git clone https://github.com/owasp-modsecurity/ModSecurity \
 	&& cd ModSecurity && git submodule init && git submodule update \
 	&& ./build.sh && ./configure && make && make install \
@@ -34,5 +38,7 @@ COPY conf/modsecurity.conf /opt/ModSecurity/
 COPY conf/main.conf /etc/nginx/modsec/
 
 COPY conf/default /etc/nginx/sites-available/
+
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
