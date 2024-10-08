@@ -8,8 +8,8 @@ RUN apt update -y && apt upgrade -y \
 	pkg-config wget zlib1g-dev libgd-dev \
 	&& mkdir /etc/nginx/ssl \
 	&& apt install openssl -y \
-    && openssl req -x509 -nodes -out /etc/nginx/ssl/transcendance.crt \
-    -keyout /etc/nginx/ssl/transcendance.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=transcendance.42.fr/UID=transcendance" \
+    && openssl req -x509 -nodes -out /etc/nginx/ssl/modsec.crt \
+    -keyout /etc/nginx/ssl/modsec.key -subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=modsec.42.fr/UID=modsec" \
 	&& cd /opt && git clone https://github.com/owasp-modsecurity/ModSecurity \
 	&& cd ModSecurity && git submodule init && git submodule update \
 	&& ./build.sh && ./configure && make && make install \

@@ -1,26 +1,18 @@
-upstream transcendance {
-    server web:8000;
-}
-
 server {
 	listen 443 ssl default_server;
 	listen [::]:443 ssl default_server;
 
 	ssl_protocols TLSv1.2 TLSv1.3;
-	ssl_certificate /etc/nginx/ssl/transcendance.crt;
-	ssl_certificate_key /etc/nginx/ssl/transcendance.key;
+	ssl_certificate /etc/nginx/ssl/modsec.crt;
+	ssl_certificate_key /etc/nginx/ssl/modsec.key;
 
 	modsecurity on;
 	modsecurity_rules_file /etc/nginx/modsec/main.conf;
 
 	location / {
-		# try_files $uri $uri/ =404;
-
-        proxy_pass http://transcendance;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $host;
         proxy_redirect off;
-
 		add_header X-Content-Type-Options nosniff;
     }
 
